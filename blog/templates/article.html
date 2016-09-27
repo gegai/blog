@@ -1,0 +1,20 @@
+{% extends 'index.html' %}
+{% block page-container %}
+    <div class="mid">
+    <br/>
+        <br/>
+        <br/>
+    <h2>{{ article_obj.title }}</h2>
+
+    <h5>{{ article_obj.create_time|date:'Y-n-d h:s' }}</h5>
+</div>
+    <br/>
+        <br/>
+
+    <div class="content">
+    <p>{{ article_obj.content|safe }}</p>
+    </div>
+
+{% endblock %}
+
+

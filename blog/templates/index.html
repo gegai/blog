@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<!-- saved from url=(0036)http://v3.bootcss.com/examples/blog/ -->
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/static/bootstrap/nami.ico">
+
+    <title>Blog</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/static/bootstrap/css/blog.css" rel="stylesheet">
+    <link href="/static/bootstrap/css/custom.css" rel="stylesheet">
+
+    {% block head-js %}
+    {% endblock %}
+</head>
+
+<body>
+
+<div class="blog-masthead">
+    <div class="container" id="navbar">
+        <nav class="blog-nav">
+            <a class="blog-nav-item active" href="{% url 'home' %}">主页</a>
+            <a class="blog-nav-item" href="{% url 'category' 1 %}">诗词</a>
+            <a class="blog-nav-item" href="{% url 'category' 2 %}">散文</a>
+            <a class="blog-nav-item" href="{% url 'category' 3 %}">古文</a>
+            <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+                    <li class="menu">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">{{ request.user.username }}
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="{% url 'new_article' %}">发帖</a></li>
+                            <li class="divider"></li>
+                            <li class="dropdown-header">个人资料</li>
+                            <li><a href="{% url 'logout' %}">注销</a></li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li><a href="{% url 'log' %}">登录/注册</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</div>
+<br/>
+<br/>
+{% block page-container %}
+    <div class="container">
+        <div class="row">
+            {% for article in articles reversed %}
+                <div class="col-lg-9">
+                    <div class="left_right_middle">
+                        <h3><a href="{% url 'article_detail' article.id %}">{{ article.title }}</a></h3>
+                        {{ article.create_time|date:"Y-n-d" }}
+                        {{ article.author }}
+                    </div>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <h4>{{ article.abstract|safe }}</h4>
+                    <hr/>
+                </div>
+                <div class="col-lg-3 head-img">
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <img src="{{ MEDIA_URL }}{{ article.head_img }}">
+                </div>
+            {% endfor %}
+
+            <div class="col-lg-3">
+            </div>
+        </div><!-- /.row -->
+        <div class="pagination left_right_middle">
+    <span class="step-links">
+        {% if articles.has_previous %}
+            <a href="?page={{ articles.previous_page_number }}">上一页</a>
+        {% endif %}
+
+        <span class="current">
+            {{ articles.number }} / {{ articles.paginator.num_pages }}
+        </span>
+
+        {% if articles.has_next %}
+            <a href="?page={{ articles.next_page_number }}">下一页</a>
+        {% endif %}
+    </span>
+        </div>
+    </div><!-- /.container -->
+{% endblock %}
+<div class="blog-footer">
+    <p>Blog created by linke14<a href="http://www.baidu.com/">Django Blog</a> by <a
+            href="https://www.baidu.com">baidu</a>.</p>
+    <p>
+        <a href="">Back to top</a>
+    </p>
+</div>
+  <script type="text/javascript">
+        $(document).ready(function () {
+            var menus = $("#navbar a[href='{{ request.path}}']")[0];
+            $(menus).parent().addClass("active");
+            $(menus).parent().siblings().removeClass("active");
+            console.log(menus);
+        });
+    </script>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="/static/bootstrap/js/jquery.min.js"></script>
+<script src="/static/bootstrap/js/bootstrap.min.js"></script>
+<script src="/static/bootstrap/js/docs.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="/static/bootstrap/js/ie10-viewport-bug-workaround.js"></script>
+<script src="/static/bootstrap/js/ckeditor.js"></script>
+
+
+</body>
+</html>
